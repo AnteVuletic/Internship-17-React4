@@ -4,7 +4,7 @@ const RESOURCE_TYPE = {
     ORE : "Ore",
     GRAIN : "GRAIN",
     LUMBER : "LUMBER"
-}
+};
 Object.freeze(RESOURCE_TYPE);
 
 const TILE_TYPES = {
@@ -32,7 +32,7 @@ const TILE_TYPES = {
         TYPE: RESOURCE_TYPE.GRAIN,
         COLOR: "#f5deb3"
     }
-}
+};
 Object.freeze(TILE_TYPES);
 
 const PLAYER_TYPES = {
@@ -52,7 +52,7 @@ const PLAYER_TYPES = {
         _: "GRAY",
         COLOR: "#7D7D7D"
     }
-}
+};
 Object.freeze(PLAYER_TYPES);
 
 const BUILDING_TYPE = {
@@ -69,18 +69,23 @@ const BUILDING_TYPE = {
         ORE: 3,
         GRAIN: 2
     }
-}
+};
 Object.freeze(BUILDING_TYPE);
 
-const CHIT_VALUES = [2,12,3,3,11,11,4,4,10,10,5,5,9,9,6,6,8,8];
+const CHIT_VALUES = ["x",2,12,3,3,11,11,4,4,10,10,5,5,9,9,6,6,8,8];
 
 const BOARD_HEXES = [
+    TILE_TYPES.DESERT,
     TILE_TYPES.FOREST, TILE_TYPES.FOREST, TILE_TYPES.FOREST, TILE_TYPES.FOREST,
     TILE_TYPES.FIELD, TILE_TYPES.FIELD, TILE_TYPES.FIELD, TILE_TYPES.FIELD,
     TILE_TYPES.PASTURE, TILE_TYPES.PASTURE, TILE_TYPES.PASTURE, TILE_TYPES.PASTURE,
     TILE_TYPES.MOUNTAIN, TILE_TYPES.MOUNTAIN, TILE_TYPES.MOUNTAIN,
     TILE_TYPES.HILL, TILE_TYPES.HILL, TILE_TYPES.HILL
-]
+];
+
+const PLAYER_TYPES_LEFT = [
+    PLAYER_TYPES.RED, PLAYER_TYPES.GREEN, PLAYER_TYPES.BLUE, PLAYER_TYPES.GRAY
+];
 
 export const constants ={
     RESOURCE_TYPE,
@@ -88,5 +93,6 @@ export const constants ={
     PLAYER_TYPES,
     BUILDING_TYPE,
     CHIT_VALUES,
-    BOARD_HEXES
+    BOARD_HEXES,
+    PLAYER_TYPES_LEFT
 }

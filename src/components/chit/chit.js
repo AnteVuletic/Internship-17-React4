@@ -1,9 +1,10 @@
 import React from 'react';
+import './chit.css';
 
-const Chit = ({Chit}) =>{
+const Chit = ({chit}) =>{
     return (
-        <div>
-            {Chit}
+        <div className="chit">
+            {chit}
         </div>
     );
 }

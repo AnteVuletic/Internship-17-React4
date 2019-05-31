@@ -1,31 +1,29 @@
 import React from 'react';
 import './board.css';
 import { connect } from 'react-redux';
-import { initializeBoard, getBoard } from '../../redux/modules/board';
+import Hexagon from '../hexagon/hexagon';
 
 class Board extends React.Component{
-    componentDidMount(){
-        this.props.initializeBoard();
-    }
     render(){
-        console.log(this.props.board);
         return(
-            <div>
-                
+            <div className="board">
+                {
+                    this.props.Board.map((hexElement,Index)=>{
+                        if(Index === 0) return <span key={Index}></span>;
+                        if(hexElement.Index === 3 || hexElement.Index === 7 || hexElement.Index === 12 || hexElement.Index === 16 || hexElement.Index === 19)
+                            return <div style={{display:"table"}} key={Index}><Hexagon hexElement={hexElement}></Hexagon><div style={{clear:"left"}}></div></div>
+                        return <Hexagon key={Index} hexElement={hexElement}></Hexagon>
+                    })
+                }
             </div>
         );
     };
 }
 
 const mapStateToProps = state => ({
-    board : state.Board
+    Board : state.Board.Board
 });
 
-const mapDispatchToProps = {
-    initializeBoard,
-    getBoard
-};
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(Board);

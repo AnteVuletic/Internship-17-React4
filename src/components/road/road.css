@@ -1,0 +1,37 @@
+.road {
+    width: 50px;
+    height: 6px;
+    background-color: black;
+    position: absolute;
+}
+.road-top-right {
+    top: 9px;
+    right: 2px;
+    transform: rotate(30deg);
+}
+.road-top-left {
+    top: 9px;
+    transform: rotate(-30deg);
+}
+.road-right {
+    right: 1px;
+    top: 50%;
+    bottom: 50%;
+    transform: rotate(90deg) translate(0, -27px);
+}
+.road-left {
+    left: 1px;
+    top: 50%;
+    bottom: 50%;
+    transform: rotate(90deg) translate(0, 27px);
+}
+.road-bottom-right {
+    bottom: 10px;
+    right: 2px;
+    transform: rotate(-30deg);
+}
+.road-bottom-left {
+    bottom: 10px;
+    transform: rotate(30deg);
+}
+  
