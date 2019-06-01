@@ -1,0 +1,36 @@
+form{
+    display: block;
+    width: 30%;
+    margin: 150px auto;
+    background-color: #00baba;
+    padding: 20px 0px;
+    border-radius: 15px;
+    margin: 10px;
+}
+input{
+    display: block;
+    margin: 20px auto;
+    font-family: sans-serif;
+    font-size: 20px;
+    padding: 5px;
+}
+.button{
+    padding: 10px 20px;
+    text-transform: uppercase;  
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    border-radius: 15px;
+    outline: 0;
+    border-style: none;
+}
+label{
+    display: block;
+    text-align: center;
+    border: 1px solid white;
+    font-family: sans-serif;
+    font-size: 22px;
+    padding: 10px;
+    color: #eeeee4;
+    font-weight: bolder;
+}

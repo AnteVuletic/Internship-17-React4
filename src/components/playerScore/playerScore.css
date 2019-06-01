@@ -1,0 +1,23 @@
+.player{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    width: 90%;
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 2px;
+}
+.player:first-of-type{
+    width: 100%;
+}
+.player__resources{
+    font-size: 15px;
+}
+.player__resources span{
+    margin: 10px;
+}
+.player__score{
+    font-size: 20px;
+}

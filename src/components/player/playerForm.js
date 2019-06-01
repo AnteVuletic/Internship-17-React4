@@ -33,11 +33,15 @@ class PlayerForm extends React.Component{
     render(){
         return(
             <form onSubmit={this.handleSubmit}>
+                <label htmlFor="firstPlayer">First player:</label>
                 <input type="text" name="firstPlayer" onChange={this.handlePlayerInput}></input>
+                <label htmlFor="secondPlayer">Second player:</label>
                 <input type="text" name="secondPlayer" onChange={this.handlePlayerInput}></input>
+                <label htmlFor="thirdPlayer">Third player:</label>
                 <input type="text" name="thirdPlayer" onChange={this.handlePlayerInput}></input>
+                <label htmlFor="fourthPlayer">Fourth player:</label>
                 <input type="text" name="fourthPlayer" onChange={this.handlePlayerInput}></input>
-                <input type="submit" value="Submit"></input>
+                <input className="button" type="submit" value="Submit"></input>
             </form>
         )
     }

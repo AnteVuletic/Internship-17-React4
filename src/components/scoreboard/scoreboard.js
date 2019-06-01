@@ -1,15 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getPlayers } from '../../redux/modules/board';
 import './scoreboard.css';
+import store from '../../redux/index';
+import PlayerScore from '../playerScore/playerScore';
 
 class Scoreboard extends React.Component{
+    updateStateFromStore = () =>{
+        const currentState = this.props.Players;
+        if(this.state !== currentState){
+            this.setState(currentState);
+        }
+    }
+    componentDidMount(){
+        this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
+    }
+    componentWillUnmount(){
+        this.unsubscribeStore();
+    }
     render(){
         return(
             <div className="allPlayers">
                 {
                     this.props.Players.map((player,index) =>{
-                        return <div key={index} className="player" style={{backgroundColor: player.Type.COLOR}}>{player.Name}</div>
+                        return <PlayerScore key={index} player={player}></PlayerScore>
                     })
                 }
             </div>
@@ -22,7 +35,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    getPlayers
+
 };
 
 export default connect(

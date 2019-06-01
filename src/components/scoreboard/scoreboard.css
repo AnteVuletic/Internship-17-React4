@@ -1,12 +1,4 @@
-.player{
-    display: block;
-    padding: 10px;
-    color: white;
-    font-size: 25px;
-    font-weight: 600;
-    font-family: sans-serif;
-    margin: 2px;
-}
 .allPlayers{
-    width: 30%;
+    margin: 20px;
+    width: 50%;
 }

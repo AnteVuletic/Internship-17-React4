@@ -1,9 +1,7 @@
 import { constants } from '../../constants';
 
-const GET_BOARD = "GET_BOARD";
 const SET_ROAD = "SET_ROAD";
 const SET_CROSSROAD = "SET_CROSSROAD";
-const GET_PLAYERS = "GET_PLAYERS";
 const SET_PLAYERS = "SET_PLAYERS";
 
 class HexModel{
@@ -191,7 +189,13 @@ const initialState = {
     Players: []
 };
 
-(() =>{
+const initializePlayers = () =>{
+    for(let itterator = 0; itterator < 4; itterator++){
+        let newPlayer = new Player(constants.PLAYER_TYPES_LEFT.pop());
+        initialState.Players.push(newPlayer);
+    }
+};
+const initializeBoard = () =>{
     initialState.Board.push({Index: 0, TileType: { COLOR: '#FFF'}});
     let randomDesertIndex = Math.floor(Math.random()*20)+1;
     let desertHex = new HexModel(randomDesertIndex,constants.CHIT_VALUES[0],constants.BOARD_HEXES[0]);
@@ -206,142 +210,47 @@ const initialState = {
         else
             initialState.Board.push(desertHex);
     }
-})();
-
-(()=>{
-    for(let itterator = 0; itterator < 4; itterator++){
-        let newPlayer = new Player(constants.PLAYER_TYPES_LEFT.pop());
-        initialState.Players.push(newPlayer);
-    }
-})();
-
-export const getBoard = _ => {
-    return{
-        type: GET_BOARD,
-    }
 };
-export const setCrossroad = (index, position, player) => dispatchEvent =>{
 
-    switch(position){
-        case "Top":
-            initialState.Board[index].CrossRoadTop = player;
-            initialState.Board[initialState.Board[index].TopLeft].CrossRoadBottomRight = player;
-            initialState.Board[initialState.Board[index].TopRight].CrossRoadBottomLeft = player;
-            break;
-        case "TopLeft":
-            initialState.Board[index].CrossRoadTopLeft = player;
-            initialState.Board[initialState.Board[index].TopLeft].CrossRoadBottom = player;
-            initialState.Board[initialState.Board[index].Left].CrossRoadTopRight = player;
-            break;
-        case "TopRight":
-            initialState.Board[index].CrossRoadTopRight = player;
-            initialState.Board[initialState.Board[index].TopRight].CrossRoadBottom = player;
-            initialState.Board[initialState.Board[index].Right].CrossRoadTopLeft = player;
-            break;
-        case "Bottom":
-            initialState.Board[index].CrossRoadBottom = player;
-            initialState.Board[initialState.Board[index].BottomLeft].CrossRoadTopRight = player;
-            initialState.Board[initialState.Board[index].BottomRight].CrossRoadTopLeft = player;
-            break;
-        case "BottomLeft":
-            initialState.Board[index].CrossBottomLeft = player;
-            initialState.Board[initialState.Board[index].BottomLeft].CrossRoadTop = player;
-            initialState.Board[initialState.Board[index].Left].CrossRoadBottomRight = player;
-            break;
-        case "BottomRight":
-            initialState.Board[index].CrossRoadBottomRight = player;
-            initialState.Board[initialState.Board[index].BottomRight].CrossRoadTop = player;
-            initialState.Board[initialState.Board[index].Right].CrossRoadBottomLeft = player;
-            break;
-        default:
-            console("How you do dis?");
-            break;
-    }
+
+initializeBoard();
+initializePlayers();
+
+export const setCrossroad = (index, position, player) => dispatchEvent =>{
     dispatchEvent({
         type: SET_CROSSROAD,
-        state: initialState
+        payload: { index, position, player}
     });
 };
 
 export const setRoad = ( index, position, player ) => dispatchEvent =>{
-    switch(position){
-        case "TopLeft":
-            initialState.Board[index].RoadTopLeft = player;
-            initialState.Board[initialState.Board[index].TopLeft].RoadBottomRight = player;
-            break;
-        case "TopRight":
-            initialState.Board[index].RoadTopRight = player;
-            initialState.Board[initialState.Board[index].TopRight].RoadBottomLeft = player;
-            break;
-        case "Left":
-            initialState.Board[index].RoadLeft = player;
-            initialState.Board[initialState.Board[index].Left].RoadRight = player;
-            break;
-        case "Right":
-            initialState.Board[index].RoadRight = player;
-            initialState.Board[initialState.Board[index].Right].RoadLeft = player;
-            break;
-        case "BottomLeft":
-            initialState.Board[index].RoadBottomLeft = player;
-            initialState.Board[initialState.Board[index].BottomLeft].RoadTopRight = player;
-            break;
-        case "BottomRight":
-            initialState.Board[index].RoadBottomRight = player;
-            initialState.Board[initialState.Board[index].BottomRight].RoadTopLeft = player;
-            break;
-        default:
-            console.log("How u do dis?");
-            break;
-    }
-    console.log(initialState)
-dispatchEvent({
-    type: SET_ROAD,
-    state: initialState
-})
+    return dispatchEvent({
+        type: SET_ROAD,
+        payload: { index, position, player}
+    });
 };
 
 export const setPlayers = (playerNames) => dispatchEvent =>{
-    let playersEntered = playerNames;
-    for(let index = 0; index < initialState.Players.length; index++){
-        const randomPlayerIndex = Math.floor(Math.random() * playersEntered.length);
-        const randomPlayer = playersEntered[randomPlayerIndex];
-        playersEntered.splice(randomPlayerIndex,1);
-        initialState.Players[index].Name = randomPlayer;
-    }
     return dispatchEvent({
-        type: SET_PLAYERS
+        type: SET_PLAYERS,
+        payload: playerNames
     });
 };
-export const getPlayers = _ => {
-    return{
-        type: GET_PLAYERS,
-    }
-};
-
 const reducer = (state = initialState,action) =>{
     switch(action.type){
-        case GET_BOARD:
-            return{
-                ...state
-            }
         case SET_CROSSROAD:{
             return{
-                ...action.state
+                ..._setCrossroad(state,action.payload)
             }
         }
         case SET_ROAD:{
             return{
-                ...state
+                ..._setRoad(state,action.payload)
             }
         }
         case SET_PLAYERS:{
             return{
-                ...state
-            }
-        }
-        case GET_PLAYERS:{
-            return{
-                ...state
+                ..._setPlayers(state,action.payload)
             }
         }
         default:
@@ -349,3 +258,108 @@ const reducer = (state = initialState,action) =>{
     }
 }
 export default reducer;
+
+const _setPlayers = ( state, payload ) =>{
+    let playersEntered = payload;
+    for(let index = 0; index < state.Players.length; index++){
+        const randomPlayerIndex = Math.floor(Math.random() * playersEntered.length);
+        const randomPlayer = playersEntered[randomPlayerIndex];
+        playersEntered.splice(randomPlayerIndex,1);
+        state.Players[index].Name = randomPlayer;
+    }
+    return state
+}
+
+const _setCrossroad = ( state, payload ) =>{
+    const { index,position, player } = payload;
+    switch(position){
+        case "Top":
+            if(state.Board[index].CrossRoadTop !== null ) return state;
+            state.Board[index].CrossRoadTop = player;
+            state.Board[state.Board[index].TopLeft].CrossRoadBottomRight = player;
+            state.Board[state.Board[index].TopRight].CrossRoadBottomLeft = player;
+            break;
+        case "TopLeft":
+            if(state.Board[index].CrossRoadTopLeft !== null ) return state;
+            state.Board[index].CrossRoadTopLeft = player;
+            state.Board[state.Board[index].TopLeft].CrossRoadBottom = player;
+            state.Board[state.Board[index].Left].CrossRoadTopRight = player;
+            break;
+        case "TopRight":
+            if(state.Board[index].CrossRoadTopRight !== null ) return state;
+            state.Board[index].CrossRoadTopRight = player;
+            state.Board[state.Board[index].TopRight].CrossRoadBottom = player;
+            state.Board[state.Board[index].Right].CrossRoadTopLeft = player;
+            break;
+        case "Bottom":
+            if(state.Board[index].CrossRoadBottom !== null ) return state;
+            state.Board[index].CrossRoadBottom = player;
+            state.Board[state.Board[index].BottomLeft].CrossRoadTopRight = player;
+            state.Board[state.Board[index].BottomRight].CrossRoadTopLeft = player;
+            break;
+        case "BottomLeft":
+            if(state.Board[index].CrossRoadBottomLeft !== null ) return state;
+            state.Board[index].CrossRoadBottomLeft = player;
+            state.Board[state.Board[index].BottomLeft].CrossRoadTop = player;
+            state.Board[state.Board[index].Left].CrossRoadBottomRight = player;
+            break;
+        case "BottomRight":
+            if(state.Board[index].CrossRoadBottomRight !== null ) return state;
+            state.Board[index].CrossRoadBottomRight = player;
+            state.Board[state.Board[index].BottomRight].CrossRoadTop = player;
+            state.Board[state.Board[index].Right].CrossRoadBottomLeft = player;
+            break;
+        default:
+            console("How you do dis?");
+            break;
+    }
+    state = _nextPlayer(state);
+    return state;
+}
+
+const _setRoad = ( state, payload ) =>{
+    const { index, position, player } = payload;
+    switch(position){
+        case "TopLeft":
+            if(state.Board[index].RoadTopLeft !== null) return state;
+            state.Board[index].RoadTopLeft = player;
+            state.Board[state.Board[index].TopLeft].RoadBottomRight = player;
+            break;
+        case "TopRight":
+            if(state.Board[index].RoadTopRight !== null) return state;
+            state.Board[index].RoadTopRight = player;
+            state.Board[state.Board[index].TopRight].RoadBottomLeft = player;
+            break;
+        case "Left":
+            if(state.Board[index].RoadLeft !== null) return state;
+            state.Board[index].RoadLeft = player;
+            state.Board[state.Board[index].Left].RoadRight = player;
+            break;
+        case "Right":
+            if(state.Board[index].RoadRight !== null) return state;
+            state.Board[index].RoadRight = player;
+            state.Board[state.Board[index].Right].RoadLeft = player;
+            break;
+        case "BottomLeft":
+            if(state.Board[index].RoadBottomLeft !== null) return state;
+            state.Board[index].RoadBottomLeft = player;
+            state.Board[state.Board[index].BottomLeft].RoadTopRight = player;
+            break;
+        case "BottomRight":
+            if(state.Board[index].RoadBottomRight    !== null) return state;
+            state.Board[index].RoadBottomRight = player;
+            state.Board[state.Board[index].BottomRight].RoadTopLeft = player;
+            break;
+        default:
+            console.log("How u do dis?");
+            break;
+    }
+    state = _nextPlayer(state)
+    return state;
+}
+const _nextPlayer = (state)=>{
+    let player = state.Players[0];
+    state.Players.splice(0,1);
+    state.Players.push(player);
+    return state;
+}
