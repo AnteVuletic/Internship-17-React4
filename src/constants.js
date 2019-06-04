@@ -2,8 +2,8 @@ const RESOURCE_TYPE = {
     BRICK : "Brick",
     WOOL : "Wool",
     ORE : "Ore",
-    GRAIN : "GRAIN",
-    LUMBER : "LUMBER"
+    GRAIN : "Grain",
+    LUMBER : "Lumber"
 };
 Object.freeze(RESOURCE_TYPE);
 

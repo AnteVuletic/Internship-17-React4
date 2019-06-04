@@ -1,13 +1,15 @@
 .player{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
     width: 90%;
     color: white;
     font-size: 25px;
     font-weight: 600;
     font-family: sans-serif;
-    margin: 2px;
+    margin: 5px;
+    border-radius: 5px;
 }
 .player:first-of-type{
     width: 100%;
@@ -16,7 +18,10 @@
     font-size: 15px;
 }
 .player__resources span{
-    margin: 10px;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 10px;
+    height: 100%;
 }
 .player__score{
     font-size: 20px;

@@ -2,3 +2,30 @@
     margin: 20px;
     width: 50%;
 }
+
+button{
+    display: block;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 15px auto;
+    width: fit-content;
+    outline: 0;
+    border: none;
+    background-color: #00baba;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+}
+.roll{
+    display: block;
+    font-size: 35px;
+    font-weight: 1000;
+    padding: 10px 20px;
+    width: fit-content;
+    margin-left: auto;
+    background-color: #FFD700;
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+}
