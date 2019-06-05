@@ -10,7 +10,7 @@ const PlayerWon = ({ Players }) =>{
         <div className="winners">
             {
                 orderByWinner().map((element,index) =>{
-                    return <div style={{ backgroundColor: element.Type.COLOR }}>
+                    return <div key={index} style={{ backgroundColor: element.Type.COLOR }}>
                         {index+1}. {element.Name}
                     </div>
                 })
@@ -23,6 +23,6 @@ const mapStateToProps = state =>({
     Players: state.Board.Players
 });
 
-export default connect({
+export default connect(
     mapStateToProps
-})(PlayerWon);
+)(PlayerWon);

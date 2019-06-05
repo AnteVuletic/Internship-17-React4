@@ -11,8 +11,8 @@ class Scoreboard extends React.Component{
         if(this.state !== currentState){
             this.setState(currentState);
         }
-        if(this.props.State.Players.some(player => player.Points >= 10))
-            this.props.history.push('/win');
+        if(currentState.Players.some(function(player){ return player.Points >= 10}))
+            window.location("/Won");
     }
     componentDidMount(){
         this.unsubscribeStore = store.subscribe(this.updateStateFromStore);

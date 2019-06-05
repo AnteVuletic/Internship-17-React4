@@ -1,0 +1,12 @@
+.winners{
+    width: 50%;
+    margin: 200px auto;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: white;
+}
+.winners > div{
+    padding: 10px;
+}
