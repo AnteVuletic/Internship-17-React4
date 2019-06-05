@@ -127,7 +127,7 @@ const reducer = (state = initialState, action) => {
                         tmpState.Players[0].HasPlayedSecondHand = true;
                         if (allThatPlayedSecondHand.length === 4) {
                             tmpState.InitialPlay = false;
-                            for (let i = 1; i < 12; i++) {
+                            for (let i = 1; i <= 12; i++) {
                                 tmpState = _generateResource(tmpState, i);
                             }
                             return {
@@ -188,21 +188,21 @@ const _reversePlayers = (state) => {
 const _isNextPlayerTurn = (state, player) => {
     let hexesWithCrossroad = 0;
     state.Board.forEach(hexElement => {
-        if (hexElement.CrossRoadBottom !== null ? hexElement.CrossRoadBottom.Type._ === player.Type._ : false) hexesWithCrossroad++;
-        if (hexElement.CrossRoadBottomLeft !== null ? hexElement.CrossRoadBottomLeft.Type._ === player.Type._ : false) hexesWithCrossroad++;
-        if (hexElement.CrossRoadBottomRight !== null ? hexElement.CrossRoadBottomRight.Type._ === player.Type._ : false) hexesWithCrossroad++;
-        if (hexElement.CrossRoadTop !== null ? hexElement.CrossRoadTop.Type._ === player.Type._ : false) hexesWithCrossroad++;
-        if (hexElement.CrossRoadTopLeft !== null ? hexElement.CrossRoadTopLeft.Type._ === player.Type._ : false) hexesWithCrossroad++;
-        if (hexElement.CrossRoadTopRight !== null ? hexElement.CrossRoadTopRight.Type._ === player.Type._ : false) hexesWithCrossroad++;
+        if (hexElement.CrossRoadBottom ? hexElement.CrossRoadBottom.Type._ === player.Type._ : false) hexesWithCrossroad++;
+        if (hexElement.CrossRoadBottomLeft ? hexElement.CrossRoadBottomLeft.Type._ === player.Type._ : false) hexesWithCrossroad++;
+        if (hexElement.CrossRoadBottomRight ? hexElement.CrossRoadBottomRight.Type._ === player.Type._ : false) hexesWithCrossroad++;
+        if (hexElement.CrossRoadTop ? hexElement.CrossRoadTop.Type._ === player.Type._ : false) hexesWithCrossroad++;
+        if (hexElement.CrossRoadTopLeft ? hexElement.CrossRoadTopLeft.Type._ === player.Type._ : false) hexesWithCrossroad++;
+        if (hexElement.CrossRoadTopRight ? hexElement.CrossRoadTopRight.Type._ === player.Type._ : false) hexesWithCrossroad++;
     });
     let hexesWithRoads = 0;
     state.Board.forEach(hexElement => {
-        if (hexElement.RoadTopLeft !== null ? hexElement.RoadTopLeft.Type._ === player.Type._ : false) hexesWithRoads++;
-        if (hexElement.RoadTopRight !== null ? hexElement.RoadTopRight.Type._ === player.Type._ : false) hexesWithRoads++;
-        if (hexElement.RoadLeft !== null ? hexElement.RoadLeft.Type._ === player.Type._ : false) hexesWithRoads++;
-        if (hexElement.RoadRight !== null ? hexElement.RoadRight.Type._ === player.Type._ : false) hexesWithRoads++;
-        if (hexElement.RoadBottomLeft !== null ? hexElement.RoadBottomLeft.Type._ === player.Type._ : false) hexesWithRoads++;
-        if (hexElement.RoadBottomRight !== null ? hexElement.RoadBottomRight.Type._ === player.Type._ : false) hexesWithRoads++;
+        if (hexElement.RoadTopLeft ? hexElement.RoadTopLeft.Type._ === player.Type._ : false) hexesWithRoads++;
+        if (hexElement.RoadTopRight ? hexElement.RoadTopRight.Type._ === player.Type._ : false) hexesWithRoads++;
+        if (hexElement.RoadLeft ? hexElement.RoadLeft.Type._ === player.Type._ : false) hexesWithRoads++;
+        if (hexElement.RoadRight ? hexElement.RoadRight.Type._ === player.Type._ : false) hexesWithRoads++;
+        if (hexElement.RoadBottomLeft ? hexElement.RoadBottomLeft.Type._ === player.Type._ : false) hexesWithRoads++;
+        if (hexElement.RoadBottomRight ? hexElement.RoadBottomRight.Type._ === player.Type._ : false) hexesWithRoads++;
     });
     let hasPlacedCrossRoad = false;
     let hasPlacedRoad = false;
@@ -243,132 +243,132 @@ const _setCrossroad = (state, payload) => {
     const thisIndexBottomRight = state.Board[index].BottomRight;
     switch (position) {
         case "Top":
-            if (state.Board[index].CrossRoadTop !== null) {
+            if (state.Board[index].CrossRoadTop) {
                 return _setCity(state, index, "CrossRoadTop", player);
             }
             if (
                 !state.InitialPlay &&
                 (
-                    state.Board[index].RoadTopRight !== null ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true ||
-                        state.Board[index].RoadTopLeft !== null ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true ||
-                            state.Board[indexTopRight].RoadLeft !== null ? state.Board[indexTopRight].RoadLeft.Type._ !== player.Type._ : true
+                    state.Board[index].RoadTopRight ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true ||
+                        state.Board[index].RoadTopLeft ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true ||
+                            state.Board[indexTopRight].RoadLeft ? state.Board[indexTopRight].RoadLeft.Type._ !== player.Type._ : true
                 )
             ) return state;
             if (_checkResourcesSettlement(player) && !state.InitialPlay) return state;
             if (
-                state.Board[index].CrossRoadTopLeft !== null ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : false ||
-                    state.Board[index].CrossRoadTopRight !== null ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : false ||
-                        state.Board[state.Board[index].TopRight].CrossRoadTopLeft !== null ? state.Board[state.Board[index].TopRight].CrossRoadTopLeft.Type._ !== player.Type._ : false
+                state.Board[index].CrossRoadTopLeft ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : false ||
+                    state.Board[index].CrossRoadTopRight ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : false ||
+                        state.Board[state.Board[index].TopRight].CrossRoadTopLeft ? state.Board[state.Board[index].TopRight].CrossRoadTopLeft.Type._ !== player.Type._ : false
             ) return state;
             state.Board[index].CrossRoadTop = player;
             state.Board[state.Board[index].TopLeft].CrossRoadBottomRight = player;
             state.Board[state.Board[index].TopRight].CrossRoadBottomLeft = player;
             break;
         case "TopLeft":
-            if (state.Board[index].CrossRoadTopLeft !== null) {
+            if (state.Board[index].CrossRoadTopLeft) {
                 return _setCity(state, index, "CrossRoadTopLeft", player);
             }
             if (
                 !state.InitialPlay &&
                 (
-                    state.Board[index].RoadLeft !== null ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true ||
-                        state.Board[index].RoadTopLeft !== null ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true ||
-                            state.Board[indexLeft].RoadTopRight !== null ? state.Board[indexLeft].RoadTopRight.Type._ !== player.Type._ : true
+                    state.Board[index].RoadLeft ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true ||
+                        state.Board[index].RoadTopLeft ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true ||
+                            state.Board[indexLeft].RoadTopRight ? state.Board[indexLeft].RoadTopRight.Type._ !== player.Type._ : true
                 )
             ) return state;
             if (_checkResourcesSettlement(player) && !state.InitialPlay) return state;
             if (
-                state.Board[index].CrossRoadTop !== null ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : false ||
-                    state.Board[index].CrossRoadBottomLeft !== null ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : false ||
-                        state.Board[state.Board[index].Left].CrossRoadTop !== null ? state.Board[state.Board[index].Left].CrossRoadTop.Type._ !== player.Type._ : false
+                state.Board[index].CrossRoadTop ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : false ||
+                    state.Board[index].CrossRoadBottomLeft ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : false ||
+                        state.Board[state.Board[index].Left].CrossRoadTop ? state.Board[state.Board[index].Left].CrossRoadTop.Type._ !== player.Type._ : false
             ) return state;
             state.Board[index].CrossRoadTopLeft = player;
             state.Board[state.Board[index].TopLeft].CrossRoadBottom = player;
             state.Board[state.Board[index].Left].CrossRoadTopRight = player;
             break;
         case "TopRight":
-            if (state.Board[index].CrossRoadTopRight !== null) {
+            if (state.Board[index].CrossRoadTopRight) {
                 return _setCity(state, index, "CrossRoadTopRight", player);
             }
             if (
                 !state.InitialPlay &&
                 (
-                    state.Board[index].RoadTopRight !== null ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true ||
-                        state.Board[index].RoadRight !== null ? state.Board[index].RoadRight.Type._ !== player.Type._ : true ||
-                            state.Board[indexRight].RoadTopLeft !== null ? state.Board[indexRight].RoadTopLeft.Type._ !== player.Type._ : true
+                    state.Board[index].RoadTopRight ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true ||
+                        state.Board[index].RoadRight ? state.Board[index].RoadRight.Type._ !== player.Type._ : true ||
+                            state.Board[indexRight].RoadTopLeft ? state.Board[indexRight].RoadTopLeft.Type._ !== player.Type._ : true
                 )
             ) return state;
             if (_checkResourcesSettlement(player) && !state.InitialPlay) return state;
             if (
-                state.Board[index].CrossRoadTop !== null ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : false ||
-                    state.Board[index].CrossRoadBottomRight !== null ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : false ||
-                        state.Board[state.Board[index].Right].CrossRoadTop !== null ? state.Board[state.Board[index].Right].CrossRoadTop.Type._ !== player.Type._ : false
+                state.Board[index].CrossRoadTop ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : false ||
+                    state.Board[index].CrossRoadBottomRight ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : false ||
+                        state.Board[state.Board[index].Right].CrossRoadTop ? state.Board[state.Board[index].Right].CrossRoadTop.Type._ !== player.Type._ : false
             ) return state;
             state.Board[index].CrossRoadTopRight = player;
             state.Board[state.Board[index].TopRight].CrossRoadBottom = player;
             state.Board[state.Board[index].Right].CrossRoadTopLeft = player;
             break;
         case "Bottom":
-            if (state.Board[index].CrossRoadBottom !== null) {
+            if (state.Board[index].CrossRoadBottom) {
                 return _setCity(state, index, "CrossRoadBottom", player);
             };
             if (
                 !state.InitialPlay &&
                 (
-                    state.Board[index].RoadBottomLeft !== null ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true ||
-                        state.Board[index].RoadBottomRight !== null ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true ||
-                            state.Board[indexBottomRight].RoadLeft !== null ? state.Board[indexBottomRight].RoadLeft.Type._ !== player.Type._ : true
+                    state.Board[index].RoadBottomLeft  ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true ||
+                        state.Board[index].RoadBottomRight ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true ||
+                            state.Board[indexBottomRight].RoadLeft ? state.Board[indexBottomRight].RoadLeft.Type._ !== player.Type._ : true
                 )
             ) return state;
             if (_checkResourcesSettlement(player) && !state.InitialPlay) return state;
             if (
-                state.Board[index].CrossRoadBottomLeft !== null ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : false ||
-                    state.Board[index].CrossRoadBottomRight !== null ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : false ||
-                        state.Board[state.Board[index].BottomRight].CrossRoadBottomLeft !== null ? state.Board[state.Board[index].BottomRight].CrossRoadBottomLeft !== player.Type._ : false
+                state.Board[index].CrossRoadBottomLeft ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : false ||
+                    state.Board[index].CrossRoadBottomRight ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : false ||
+                        state.Board[state.Board[index].BottomRight].CrossRoadBottomLeft ? state.Board[state.Board[index].BottomRight].CrossRoadBottomLeft !== player.Type._ : false
             ) return state;
             state.Board[index].CrossRoadBottom = player;
             state.Board[state.Board[index].BottomLeft].CrossRoadTopRight = player;
             state.Board[state.Board[index].BottomRight].CrossRoadTopLeft = player;
             break;
         case "BottomLeft":
-            if (state.Board[index].CrossRoadBottomLeft !== null) {
+            if (state.Board[index].CrossRoadBottomLeft) {
                 return _setCity(state, index, "CrossRoadBottomLeft", player);
             }
             if (
                 !state.InitialPlay &&
                 (
-                    state.Board[index].RoadBottomLeft !== null ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true ||
-                        state.Board[index].RoadLeft !== null ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true ||
-                            state.Board[indexBottomLeft].RoadTopLeft !== null ? state.Board[indexBottomLeft].RoadTopLeft.Type._ !== player.Type._ : true
+                    state.Board[index].RoadBottomLeft ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true ||
+                        state.Board[index].RoadLeft ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true ||
+                            state.Board[indexBottomLeft].RoadTopLeft ? state.Board[indexBottomLeft].RoadTopLeft.Type._ !== player.Type._ : true
                 )
             ) return state;
             if (_checkResourcesSettlement(player) && !state.InitialPlay) return state;
             if (
-                state.Board[index].CrossRoadTopLeft !== null ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : false ||
-                    state.Board[index].CrossRoadBottom !== null ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : false ||
-                        state.Board[state.Board[index].BottomLeft].CrossRoadTopLeft !== null ? state.Board[state.Board[index].BottomLeft].CrossRoadTopLeft.Type._ !== player.Type._ : false
+                state.Board[index].CrossRoadTopLeft ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : false ||
+                    state.Board[index].CrossRoadBottom ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : false ||
+                        state.Board[state.Board[index].BottomLeft].CrossRoadTopLeft ? state.Board[state.Board[index].BottomLeft].CrossRoadTopLeft.Type._ !== player.Type._ : false
             ) return state;
             state.Board[index].CrossRoadBottomLeft = player;
             state.Board[state.Board[index].BottomLeft].CrossRoadTop = player;
             state.Board[state.Board[index].Left].CrossRoadBottomRight = player;
             break;
         case "BottomRight":
-            if (state.Board[index].CrossRoadBottomRight !== null) {
+            if (state.Board[index].CrossRoadBottomRight) {
                 return _setCity(state, index, "CrossRoadBottomRight", player);
             };
             if (
                 !state.InitialPlay &&
                 (
-                    state.Board[index].RoadBottomRight !== null ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true ||
-                        state.Board[index].RoadRight !== null ? state.Board[index].RoadRight.Type._ !== player.Type._ : true ||
-                            state.Board[thisIndexBottomRight].RoadTopRight !== null ? state.Board[thisIndexBottomRight].RoadTopRight.Type._ !== player.Type._ : true
+                    state.Board[index].RoadBottomRight ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true ||
+                        state.Board[index].RoadRight ? state.Board[index].RoadRight.Type._ !== player.Type._ : true ||
+                            state.Board[thisIndexBottomRight].RoadTopRight ? state.Board[thisIndexBottomRight].RoadTopRight.Type._ !== player.Type._ : true
                 )
             ) return state;
             if (_checkResourcesSettlement(player) && !state.InitialPlay) return state;
             if (
-                state.Board[index].CrossRoadTopRight !== null ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : false ||
-                    state.Board[index].CrossRoadBottom !== null ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : false ||
-                        state.Board[state.Board[index].BottomRight].CrossRoadTopRight !== null ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : false
+                state.Board[index].CrossRoadTopRight ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : false ||
+                    state.Board[index].CrossRoadBottom ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : false ||
+                        state.Board[state.Board[index].BottomRight].CrossRoadTopRight ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : false
             ) return state;
             state.Board[index].CrossRoadBottomRight = player;
             state.Board[state.Board[index].BottomRight].CrossRoadTop = player;
@@ -425,79 +425,79 @@ const _setRoad = (state, payload) => {
     }
     switch (position) {
         case "TopLeft":
-            if (state.Board[index].RoadTopLeft !== null) return state;
+            if (state.Board[index].RoadTopLeft) return state;
             if (
-                state.Board[index].RoadLeft !== null ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true &&
-                    state.Board[index].RoadTopRight !== null ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true &&
-                        state.Board[state.Board[index].TopLeft].RoadRight !== null ? state.Board[state.Board[index].TopLeft].RoadRight.Type._ !== player.Type._ : true &&
-                            state.Board[state.Board[index].TopLeft].RoadBottomLeft !== null ? state.Board[state.Board[index].TopLeft].RoadBottomLeft.Type._ !== player.Type._ : true &&
-                                state.Board[index].CrossRoadTopLeft !== null ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : true &&
-                                    state.Board[index].CrossRoadTop !== null ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : true
+                state.Board[index].RoadLeft ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true &&
+                    state.Board[index].RoadTopRight ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true &&
+                        state.Board[state.Board[index].TopLeft].RoadRight ? state.Board[state.Board[index].TopLeft].RoadRight.Type._ !== player.Type._ : true &&
+                            state.Board[state.Board[index].TopLeft].RoadBottomLeft ? state.Board[state.Board[index].TopLeft].RoadBottomLeft.Type._ !== player.Type._ : true &&
+                                state.Board[index].CrossRoadTopLeft ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : true &&
+                                    state.Board[index].CrossRoadTop ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : true
             ) return state;
             state.Board[index].RoadTopLeft = player;
             state.Board[state.Board[index].TopLeft].RoadBottomRight = player;
             break;
         case "TopRight":
-            if (state.Board[index].RoadTopRight !== null) return state;
+            if (state.Board[index].RoadTopRight) return state;
             if (
-                state.Board[index].RoadTopLeft !== null ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true &&
-                    state.Board[index].RoadRight !== null ? state.Board[index].RoadRight.Type._ !== player.Type._ : true &&
-                        state.Board[state.Board[index].TopRight].RoadLeft !== null ? state.Board[state.Board[index].TopRight].RoadLeft.Type._ !== player.Type._ : true &&
-                            state.Board[state.Board[index].TopRight].RoadBottomRight !== null ? state.Board[state.Board[index].TopRight].RoadBottomRight.Type._ !== player.Type._ : true &&
-                                state.Board[index].CrossRoadTopRight !== null ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : true &&
-                                    state.Board[index].CrossRoadTop !== null ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : true
+                state.Board[index].RoadTopLeft ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true &&
+                    state.Board[index].RoadRight ? state.Board[index].RoadRight.Type._ !== player.Type._ : true &&
+                        state.Board[state.Board[index].TopRight].RoadLeft ? state.Board[state.Board[index].TopRight].RoadLeft.Type._ !== player.Type._ : true &&
+                            state.Board[state.Board[index].TopRight].RoadBottomRight ? state.Board[state.Board[index].TopRight].RoadBottomRight.Type._ !== player.Type._ : true &&
+                                state.Board[index].CrossRoadTopRight ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : true &&
+                                    state.Board[index].CrossRoadTop ? state.Board[index].CrossRoadTop.Type._ !== player.Type._ : true
             ) return state;
             state.Board[index].RoadTopRight = player;
             state.Board[state.Board[index].TopRight].RoadBottomLeft = player;
             break;
         case "Left":
-            if (state.Board[index].RoadLeft !== null) return state;
+            if (state.Board[index].RoadLeft) return state;
             if (
-                state.Board[index].RoadTopLeft !== null ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true &&
-                    state.Board[index].RoadBottomLeft !== null ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true &&
-                        state.Board[state.Board[index].Left].RoadBottomRight !== null ? state.Board[state.Board[index].Left].RoadBottomRight.Type._ !== player.Type._ : true &&
-                            state.Board[state.Board[index].Left].RoadTopRight !== null ? state.Board[state.Board[index].Left].RoadTopRight.Type._ !== player.Type._ : true &&
-                                state.Board[index].CrossRoadTopLeft !== null ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : true &&
-                                    state.Board[index].CrossRoadBottomLeft !== null ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : true
+                state.Board[index].RoadTopLeft ? state.Board[index].RoadTopLeft.Type._ !== player.Type._ : true &&
+                    state.Board[index].RoadBottomLeft ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true &&
+                        state.Board[state.Board[index].Left].RoadBottomRight ? state.Board[state.Board[index].Left].RoadBottomRight.Type._ !== player.Type._ : true &&
+                            state.Board[state.Board[index].Left].RoadTopRight ? state.Board[state.Board[index].Left].RoadTopRight.Type._ !== player.Type._ : true &&
+                                state.Board[index].CrossRoadTopLeft ? state.Board[index].CrossRoadTopLeft.Type._ !== player.Type._ : true &&
+                                    state.Board[index].CrossRoadBottomLeft ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : true
             ) return state;
             state.Board[index].RoadLeft = player;
             state.Board[state.Board[index].Left].RoadRight = player;
             break;
         case "Right":
-            if (state.Board[index].RoadRight !== null) return state;
+            if (state.Board[index].RoadRight) return state;
             if (
-                state.Board[index].RoadTopRight !== null ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true &&
-                    state.Board[index].RoadBottomRight !== null ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true &&
-                        state.Board[state.Board[index].Right].RoadBottomLeft !== null ? state.Board[state.Board[index].Right].RoadBottomLeft.Type._ !== player.Type._ : true &&
-                            state.Board[state.Board[index].Right].RoadTopLeft !== null ? state.Board[state.Board[index].Right].RoadTopLeft.Type._ !== player.Type._ : true &&
-                                state.Board[index].CrossRoadTopRight !== null ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : true &&
-                                    state.Board[index].CrossRoadBottomRight !== null ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : true
+                state.Board[index].RoadTopRight ? state.Board[index].RoadTopRight.Type._ !== player.Type._ : true &&
+                    state.Board[index].RoadBottomRight ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true &&
+                        state.Board[state.Board[index].Right].RoadBottomLeft ? state.Board[state.Board[index].Right].RoadBottomLeft.Type._ !== player.Type._ : true &&
+                            state.Board[state.Board[index].Right].RoadTopLeft ? state.Board[state.Board[index].Right].RoadTopLeft.Type._ !== player.Type._ : true &&
+                                state.Board[index].CrossRoadTopRight ? state.Board[index].CrossRoadTopRight.Type._ !== player.Type._ : true &&
+                                    state.Board[index].CrossRoadBottomRight ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : true
             ) return state;
             state.Board[index].RoadRight = player;
             state.Board[state.Board[index].Right].RoadLeft = player;
             break;
         case "BottomLeft":
-            if (state.Board[index].RoadBottomLeft !== null) return state;
+            if (state.Board[index].RoadBottomLeft) return state;
             if (
-                state.Board[index].RoadLeft !== null ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true &&
-                    state.Board[index].RoadBottomRight !== null ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true &&
-                        state.Board[state.Board[index].BottomLeft].RoadTopLeft !== null ? state.Board[state.Board[index].BottomLeft].RoadTopLeft.Type._ !== player.Type._ : true &&
-                            state.Board[state.Board[index].BottomLeft].RoadRight !== null ? state.Board[state.Board[index].BottomLeft].RoadRight.Type._ !== player.Type._ : true &&
-                                state.Board[index].CrossRoadBottomLeft !== null ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : true &&
-                                    state.Board[index].CrossRoadBottom !== null ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : true
+                state.Board[index].RoadLeft ? state.Board[index].RoadLeft.Type._ !== player.Type._ : true &&
+                    state.Board[index].RoadBottomRight ? state.Board[index].RoadBottomRight.Type._ !== player.Type._ : true &&
+                        state.Board[state.Board[index].BottomLeft].RoadTopLeft ? state.Board[state.Board[index].BottomLeft].RoadTopLeft.Type._ !== player.Type._ : true &&
+                            state.Board[state.Board[index].BottomLeft].RoadRight ? state.Board[state.Board[index].BottomLeft].RoadRight.Type._ !== player.Type._ : true &&
+                                state.Board[index].CrossRoadBottomLeft ? state.Board[index].CrossRoadBottomLeft.Type._ !== player.Type._ : true &&
+                                    state.Board[index].CrossRoadBottom ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : true
             ) return state;
             state.Board[index].RoadBottomLeft = player;
             state.Board[state.Board[index].BottomLeft].RoadTopRight = player;
             break;
         case "BottomRight":
-            if (state.Board[index].RoadBottomRight !== null) return state;
+            if (state.Board[index].RoadBottomRight) return state;
             if (
-                state.Board[index].RoadRight !== null ? state.Board[index].RoadRight.Type._ !== player.Type._ : true &&
-                    state.Board[index].RoadBottomLeft !== null ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true &&
-                        state.Board[state.Board[index].BottomRight].RoadTopRight !== null ? state.Board[state.Board[index].BottomRight].RoadTopRight.Type._ !== player.Type._ : true &&
-                            state.Board[state.Board[index].BottomRight].RoadLeft !== null ? state.Board[state.Board[index].BottomRight].RoadLeft.Type._ !== player.Type._ : true &&
-                                state.Board[index].CrossRoadBottomRight !== null ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : true &&
-                                    state.Board[index].CrossRoadBottom !== null ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : true
+                state.Board[index].RoadRight ? state.Board[index].RoadRight.Type._ !== player.Type._ : true &&
+                    state.Board[index].RoadBottomLeft ? state.Board[index].RoadBottomLeft.Type._ !== player.Type._ : true &&
+                        state.Board[state.Board[index].BottomRight].RoadTopRight ? state.Board[state.Board[index].BottomRight].RoadTopRight.Type._ !== player.Type._ : true &&
+                            state.Board[state.Board[index].BottomRight].RoadLeft ? state.Board[state.Board[index].BottomRight].RoadLeft.Type._ !== player.Type._ : true &&
+                                state.Board[index].CrossRoadBottomRight ? state.Board[index].CrossRoadBottomRight.Type._ !== player.Type._ : true &&
+                                    state.Board[index].CrossRoadBottom ? state.Board[index].CrossRoadBottom.Type._ !== player.Type._ : true
             ) return state;
             state.Board[index].RoadBottomRight = player;
             state.Board[state.Board[index].BottomRight].RoadTopLeft = player;
@@ -533,37 +533,37 @@ const _generateResource = (state, randomRoll) => {
     let hexesInQuestion = state.Board.filter(element => element.Chit === randomRoll);
     let playerToEditIndex;
     hexesInQuestion.forEach(hexInQuestion => {
-        if (hexInQuestion.CrossRoadTop !== null) {
+        if (hexInQuestion.CrossRoadTop) {
             playerToEditIndex = state.Players.findIndex(player => player.Type._ === hexInQuestion.CrossRoadTop.Type._);
             state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
             if(hexInQuestion.IsCity)
                 state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
         }
-        if (hexInQuestion.CrossRoadBottom !== null) {
+        if (hexInQuestion.CrossRoadBottom) {
             playerToEditIndex = state.Players.findIndex(player => player.Type._ === hexInQuestion.CrossRoadBottom.Type._);
             state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
             if(hexInQuestion.IsCity)
                 state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
         }
-        if (hexInQuestion.CrossRoadTopLeft !== null) {
+        if (hexInQuestion.CrossRoadTopLeft) {
             playerToEditIndex = state.Players.findIndex(player => player.Type._ === hexInQuestion.CrossRoadTopLeft.Type._);
             state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
             if(hexInQuestion.IsCity)
                 state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
         }
-        if (hexInQuestion.CrossRoadTopRight !== null) {
+        if (hexInQuestion.CrossRoadTopRight) {
             playerToEditIndex = state.Players.findIndex(player => player.Type._ === hexInQuestion.CrossRoadTopRight.Type._);
             state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
             if(hexInQuestion.IsCity)
                 state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
         }
-        if (hexInQuestion.CrossRoadBottomLeft !== null) {
+        if (hexInQuestion.CrossRoadBottomLeft) {
             playerToEditIndex = state.Players.findIndex(player => player.Type._ === hexInQuestion.CrossRoadBottomLeft.Type._);
             state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
             if(hexInQuestion.IsCity)
                 state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
         }
-        if (hexInQuestion.CrossRoadBottomRight !== null) {
+        if (hexInQuestion.CrossRoadBottomRight) {
             playerToEditIndex = state.Players.findIndex(player => player.Type._ === hexInQuestion.CrossRoadBottomRight.Type._);
             state.Players[playerToEditIndex][hexInQuestion.TileType.TYPE]++;
             if(hexInQuestion.IsCity)
